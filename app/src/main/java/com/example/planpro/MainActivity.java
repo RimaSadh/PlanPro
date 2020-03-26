@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
 
+                            Projects.clear();
+
+
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 final Project project = new Project();
 
@@ -105,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                                 project.setEndDate(end_date);
                                 project.setTotalCost(Double.parseDouble(total_cost));
 
-                                Projects.clear();
 
                                 // Add to list
                                 Projects.add(project);
