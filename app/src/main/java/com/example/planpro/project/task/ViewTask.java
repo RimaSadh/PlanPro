@@ -1,4 +1,4 @@
-package com.example.planpro.project;
+package com.example.planpro.project.task;
 
 import androidx.appcompat.app.AppCompatActivity;
 

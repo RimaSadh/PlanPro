@@ -7,20 +7,20 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/event_card"
+        android:id="@+id/project_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:elevation="3dp"
         android:clickable="true"
         app:cardCornerRadius="5dp"
-        android:background="@color/colorAccent"
-
+        android:background="@color/white"
         >
 
         <LinearLayout
-            android:id="@+id/event_card_ll"
+            android:id="@+id/project_card_ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -36,14 +36,14 @@
                 >
 
                 <TextView
-                    android:id="@+id/event_name"
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:paddingTop="2dp"
                     android:paddingRight="10dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:text="Event name"
+                    android:textColor="@color/red"
+                    android:text="Project name"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -60,13 +60,13 @@
                     android:layout_marginLeft="10dp" />
 
                 <TextView
-                    android:id="@+id/event_location"
+                    android:id="@+id/pm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
                     android:layout_weight="4"
-                    android:textColor="@color/colorPrimary"
-                    android:text="Event location"
+                    android:textColor="@color/green"
+                    android:text="Project Manager"
                     android:textSize="15sp"
                     android:paddingLeft="10dp" />
                 </LinearLayout>
@@ -81,23 +81,23 @@
                 >
 
             <TextView
-                android:id="@+id/event_date"
+                android:id="@+id/sd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Date"
+                android:textColor="@color/yellow"
+                android:text="Start Date"
                 android:layout_weight="1"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/event_time"
+                android:id="@+id/ed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="3dp"
-                android:paddingEnd="2dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Time"
+                android:paddingLeft="3dp"
+                android:paddingRight="2dp"
+                android:textColor="@color/yellow"
+                android:text="End Date"
                 android:layout_weight="1"
                 android:textSize="12sp" />
 

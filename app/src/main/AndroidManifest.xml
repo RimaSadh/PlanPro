@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".project.ViewTask"></activity>
-        <activity android:name=".project.AddTask" />
+        <activity android:name=".project.task.ViewTask"></activity>
+        <activity android:name=".project.task.AddTask" />
         <activity android:name=".project.ViewProject" />
         <activity android:name=".project.AddProject" />
         <activity android:name=".SplashScreen">
