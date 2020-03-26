@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "575511537587",
+    "firebase_url": "https://pm-57816.firebaseio.com",
+    "project_id": "pm-57816",
+    "storage_bucket": "pm-57816.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575511537587:android:57f14250e6ef12e3344dc6",
+        "android_client_info": {
+          "package_name": "com.example.planpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575511537587-tdr1s8lpe589m9fv8aau08sefn2it5hv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.planpro",
+            "certificate_hash": "892ef573efc6408aa69b304d19a94a28066ed643"
+          }
+        },
+        {
+          "client_id": "575511537587-at9pqna0jor1i2pl7b4eve7o1gdn606g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.planpro",
+            "certificate_hash": "a5ab0933d9a2d28725572cd851d75468e2729ca6"
+          }
+        },
+        {
+          "client_id": "575511537587-pii0gqi52u2hb42pq1fsaj5ih9s7o8af.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1brIatuciykbIXJNN2cdmbNaNtDyD-XM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575511537587-pii0gqi52u2hb42pq1fsaj5ih9s7o8af.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

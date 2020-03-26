@@ -22,6 +22,7 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        getSupportActionBar().hide();
 
         ConstraintLayout splashlin = findViewById(R.id.splash);
         splashlin.setOnClickListener(this);
