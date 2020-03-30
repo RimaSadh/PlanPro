@@ -55,7 +55,7 @@ public class AddTask extends AppCompatActivity {
     private ArrayList<Resource> ResourceList;
     private boolean Resadded = false;
     //for sotre info in DB
-    private String ProjectID = "gQSP57vqXzCZ5vLqtNiI";
+    private String ProjectID;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //for from day
@@ -87,7 +87,7 @@ public class AddTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-
+        ProjectID = getIntent().getStringExtra("project_id");
         //set for edit texts and buttons
         Setting ();
 

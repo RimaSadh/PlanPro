@@ -1,19 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".project.ViewProject">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".project.ViewProject">
+
+
+    <TextView
+        android:id="@+id/projectName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Project"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="23dp"
+        android:src="@drawable/ic_left_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:id="@+id/descriptionHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="100dp"
+        android:text="Description:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="32dp" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/descriptionHeader"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/custom_edit_text"
+        android:clickable="false"
+        android:ellipsize="none"
+        android:ems="10"
+        android:lineSpacingExtra="8sp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:scrollHorizontally="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionHeader" />
+
+    <TextView
+        android:id="@+id/startDateHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Start:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        android:layout_marginLeft="32dp" />
+
+    <TextView
+        android:id="@+id/startDate"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/description"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/custom_edit_text"
+        android:ems="10"
+        android:clickable="false"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description" />
+
+    <TextView
+        android:id="@+id/endDateHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/startDateHeader"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:text="End:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startDateHeader"
+        android:layout_marginLeft="32dp" />
+
+    <TextView
+        android:id="@+id/endDate"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/startDate"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/custom_edit_text"
+        android:ems="10"
+        android:clickable="false"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startDate" />
+
+    <TextView
+        android:id="@+id/tasksHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/endDateHeader"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Tasks:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endDateHeader"
+        android:layout_marginLeft="32dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tasksRecyclerView"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:layout_below="@id/tasksHeader"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tasksHeader" />
+
+    <TextView
+        android:id="@+id/totalCostHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tasksRecyclerView"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Total cost ($):"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tasksRecyclerView"
+        android:layout_marginLeft="32dp" />
+
+    <TextView
+        android:id="@+id/totalCost"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/tasksRecyclerView"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/custom_edit_text"
+        android:ems="10"
+        android:clickable="false"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tasksRecyclerView" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:background="#000000"
         android:backgroundTint="#000000"
-        android:src="@drawable/ic_plus" />
+        android:src="@drawable/ic_plus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

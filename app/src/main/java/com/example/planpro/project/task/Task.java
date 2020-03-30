@@ -20,6 +20,9 @@ public class Task {
         Cost = cost;
         this.resources = resources;
     }
+    public Task(){
+        //
+    }
 
     public String getName() {
         return Name;
