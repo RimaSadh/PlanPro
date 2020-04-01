@@ -1,205 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".project.task.AddTask">
+    tools:context=".project.task.AddTask"
+    android:id="@+id/AddTask">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Add Task"
-        android:textColor="#000000"
-        android:textSize="36sp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView2"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="50dp"
-        android:text="Task Name"
-        android:textSize="24sp" />
-
-    <EditText
-        android:id="@+id/TaskName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView3"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="-40dp"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <LinearLayout
-        android:id="@+id/TVlinear"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/TaskName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
+
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Start Date"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="End Date"
-            android:textSize="24sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/Blinear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/TVlinear"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/StartButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Set Date" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="-"
+            android:layout_centerHorizontal="true"
+            android:text="Add Task"
             android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="36sp" />
 
-        <Button
-            android:id="@+id/EndButton"
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Set Date" />
-    </LinearLayout>
+            android:layout_below="@id/textView2"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="50dp"
+            android:text="Task Name"
+            android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/Blinear"
-        android:layout_margin="50dp"
-        android:text="Resources"
-        android:textSize="24sp" />
-
-    <LinearLayout
-        android:id="@+id/Rlinear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView7"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-40dp"
-        android:orientation="vertical">
+        <EditText
+            android:id="@+id/TaskName"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_below="@id/textView3"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="-40dp"
+            android:background="@drawable/custom_edit_text"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="18sp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/TVlinear"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_below="@id/TaskName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/ResourceName"
+            <TextView
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Resource Name"
-                android:inputType="textPersonName" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Start Date"
+                android:textSize="24sp" />
 
-            <EditText
-                android:id="@+id/ResourceCost"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Resource Cost"
-                android:inputType="number" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="End Date"
+                android:textSize="24sp" />
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/Blinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TVlinear"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/More"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/Rlinear"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
+            <Button
+                android:id="@+id/StartButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edit_text"
+                android:text="Set Date"
+                android:textColor="#000000"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/AddMoreRe"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="-"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/EndButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edit_text"
+                android:text="Set Date"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
-            android:background="@android:drawable/ic_menu_add"
-            android:hapticFeedbackEnabled="false"
-            android:text="Button" />
+            android:layout_below="@id/Blinear"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="50dp"
+            android:text="Resources"
+            android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/DeleteLR"
+        <LinearLayout
+            android:id="@+id/Rlinear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_weight="1"
-            android:background="@android:drawable/ic_menu_delete"
-            android:text="Button" />
-    </LinearLayout>
+            android:layout_below="@id/textView7"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-40dp"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/More"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="50dp"
-        android:text="Task Cost"
-        android:textSize="24sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/TaskCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView8"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-40dp"
-        android:ems="10"
-        android:inputType="number" />
+                <EditText
+                    android:id="@+id/ResourceName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:ems="10"
+                    android:hint="Resource Name"
+                    android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/Create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Create "
-        android:textSize="24sp" />
+                <EditText
+                    android:id="@+id/ResourceCost"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:ems="10"
+                    android:hint="Resource Cost"
+                    android:inputType="number" />
+            </LinearLayout>
 
-</RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/More"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Rlinear"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/AddMoreRe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:background="@android:drawable/ic_menu_add"
+                android:hapticFeedbackEnabled="false"
+                android:text="Button" />
+
+            <Button
+                android:id="@+id/DeleteLR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"
+                android:background="@android:drawable/ic_menu_delete"
+                android:text="Button" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/More"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="50dp"
+            android:text="Task Cost"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/TaskCost"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_below="@id/textView8"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-40dp"
+            android:background="@drawable/custom_edit_text"
+            android:ems="10"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/Create"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TaskCost"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/main_button"
+            android:text="Create "
+            android:textSize="24sp" />
+    </RelativeLayout>
+</ScrollView>

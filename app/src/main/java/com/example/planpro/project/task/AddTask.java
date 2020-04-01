@@ -88,6 +88,10 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
         ProjectID = getIntent().getStringExtra("project_id");
+        //for test can't send the id
+        if ( ProjectID == null ) {
+            ProjectID = "gQSP57vqXzCZ5vLqtNiI";
+        }
         //set for edit texts and buttons
         Setting ();
 
@@ -122,20 +126,39 @@ public class AddTask extends AppCompatActivity {
                 LinearLayout linearLayout = new LinearLayout(getApplicationContext());
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
                 linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                //linearLayout.layout(5, 100, 5,5);
+                linearLayout.layout(5,100,5,5);
                 //add the created linear layout to the parent layout that contains resources info
                 Resources.addView(linearLayout);
 
                 //create resource name edit text
                 EditText rName = new EditText(getApplicationContext());
-                rName.setHint("Resource Name");
-                rName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                rName.setHint("Resource Name"+Resources.getChildCount());
+                rName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT ));
+                //rName.setBackgroundResource(R.drawable.custom_edit_text);
+                rName.setBackground(RName.getBackground());
+                rName.setWidth(RName.getWidth());
+                rName.setHeight(RName.getHeight()+30);
+                rName.setBottom(RCost.getBottom()+50);
+                //String idName = "ResourceName"+Resources.getChildCount();
+                rName.setId(Resources.getChildCount());
+                Log.d("ID", rName.getId()+"");
                 //add the created edit text to linear layout
                 linearLayout.addView(rName);
 
                 //create resource cost edit text
                 EditText rCost = new EditText(getApplicationContext());
-                rCost.setHint("Resource Cost");
+                rCost.setHint("Resource Cost"+Resources.getChildCount());
                 rCost.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                //rCost.setBackgroundResource(R.drawable.custom_edit_text);
+                rCost.setBackground(RCost.getBackground());
+                rCost.setWidth(RCost.getWidth());
+                rCost.setHeight(RCost.getHeight()+30);
+                rCost.setTop(RCost.getBottom());
+                rCost.setInputType(RCost.getInputType());
+                //String idCost = "ResourceCost"+Resources.getChildCount();
+                rCost.setId(Resources.getChildCount());
+                Log.d("ID", rCost.getId()+"");
                 //add the created edit text to linear layout
                 linearLayout.addView(rCost);
             }
@@ -282,7 +305,7 @@ public class AddTask extends AppCompatActivity {
         }
         final Task task = new Task(Tname, Integer.parseInt(Tcost), FDTS, LDTS, resources);
         //store the task obj in firestore
-        String TaskID = db.collection("Task").document().getId();
+        String TaskID = db.collection("Tasks").document().getId();
         task.setID(TaskID);
         final Map<String, Object> Task = new HashMap<>();
         Task.put("Name", task.getName());
@@ -293,7 +316,7 @@ public class AddTask extends AppCompatActivity {
         for (int i=0; i<resources.size(); i++)
             Task.put("ResourceID"+i, resources.get(i).getID());
 
-        db.collection("Task").document(TaskID)
+        db.collection("Tasks").document(TaskID)
                 .set(Task)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
