@@ -313,6 +313,7 @@ public class AddTask extends AppCompatActivity {
         Task.put("EarlyStartDate", task.getStart());
         Task.put("EarlyFinishDate", task.getEnd());
         Task.put("ProjectID", ProjectID);
+        Log.d("Size Array",resources.size()+"" );
         for (int i=0; i<resources.size(); i++)
             Task.put("ResourceID"+i, resources.get(i).getID());
 

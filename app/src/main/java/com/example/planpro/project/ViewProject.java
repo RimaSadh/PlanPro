@@ -117,7 +117,7 @@ public class ViewProject extends AppCompatActivity {
         //view tasks, query tasks from database by projectID
         //at the same time, calculate total cost of tasks
         totalCost = 0;
-        com.google.android.gms.tasks.Task<QuerySnapshot> docRef = dbSetUp.db.collection("Task")
+        com.google.android.gms.tasks.Task<QuerySnapshot> docRef = dbSetUp.db.collection("Tasks")
                 .whereEqualTo("ProjectID", projectID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -132,7 +132,7 @@ public class ViewProject extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 final Task taskk = new Task();
 
-                                String task_id = document.get("TaskID").toString();
+                                String task_id = document.getId().toString();
                                 String task_name = document.get("Name").toString();
                                 Timestamp start_dateTS = (Timestamp)document.get("EarlyStartDate");
                                 Timestamp end_dateTS = (Timestamp)document.get("EarlyFinishDate");
