@@ -99,7 +99,7 @@ public class AddTask extends AppCompatActivity {
         SDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialogStartDate = new DatePickerDialog(AddTask.this, FromDate, calendar
+                DatePickerDialog datePickerDialogStartDate = new DatePickerDialog(AddTask.this,R.style.DialogTheme ,FromDate, calendar
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialogStartDate.getDatePicker().setMinDate(System.currentTimeMillis());
@@ -110,7 +110,7 @@ public class AddTask extends AppCompatActivity {
         EDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialogFinishDate = new DatePickerDialog(AddTask.this, TillDate, calendar
+                DatePickerDialog datePickerDialogFinishDate = new DatePickerDialog(AddTask.this, R.style.DialogTheme,TillDate, calendar
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialogFinishDate.getDatePicker().setMinDate(System.currentTimeMillis());
