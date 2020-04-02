@@ -64,6 +64,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NameTV" />
 
+    <TextView
+        android:id="@+id/descriptionHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="15dp"
+        android:text="Description:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nameET"
+         />
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/descriptionHeader"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/custom_edit_text"
+        android:clickable="false"
+        android:ellipsize="none"
+        android:ems="10"
+        android:lineSpacingExtra="8sp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:scrollHorizontally="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionHeader" />
+
 
     <ImageView
         android:id="@+id/calIcon"
@@ -82,16 +116,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/nameET"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="Start Day"
+        android:layout_marginTop="15dp"
+        android:text="Start Date"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameET"
+        app:layout_constraintTop_toBottomOf="@+id/description"
         android:layout_marginLeft="32dp" />
 
     <Button
-        android:id="@+id/MTillDays"
+        android:id="@+id/start"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
@@ -99,7 +133,8 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/custom_edit_text"
         android:elevation="0dp"
-        android:text="Set Day"
+        android:text="Set Date"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calIcon"
         app:layout_constraintTop_toBottomOf="@+id/DateTV"
@@ -111,14 +146,14 @@
         android:id="@+id/TimeTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/MTillDays"
+        android:layout_below="@id/start"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="Time"
+        android:layout_marginTop="20dp"
+        android:text="End Date"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MTillDays"
+        app:layout_constraintTop_toBottomOf="@+id/start"
         android:layout_marginLeft="32dp" />
 
 
@@ -134,14 +169,15 @@
         app:layout_constraintTop_toBottomOf="@+id/TimeTV" />
 
     <Button
-        android:id="@+id/MTime"
+        android:id="@+id/end"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/custom_edit_text"
-        android:text="Set Time"
+        android:text="Set Date"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cloIcon"
         app:layout_constraintTop_toBottomOf="@+id/TimeTV"

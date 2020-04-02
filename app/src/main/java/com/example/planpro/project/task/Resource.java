@@ -6,9 +6,10 @@ public class Resource {
     private int Cost;
     private String ID;
 
-    public Resource(String name, int cost) {
+    public Resource(String name, int cost, String taskID) {
         Name = name;
         Cost = cost;
+        ID = taskID;
     }
 
     public String getName() {

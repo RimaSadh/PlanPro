@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.planpro.R;
 import com.example.planpro.project.task.AddTask;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -41,8 +43,10 @@ public class ViewProject extends AppCompatActivity {
     private TaskAdapter Task_adapter;
     private dbSetUp DB = new dbSetUp();
     private String projectName, projectID, description, startDate, endDate;
-    private double totalCost;
+    private double totalCost, resourceCost, taskCost;
     ArrayList<Task> tasks = new ArrayList<Task>();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,9 @@ public class ViewProject extends AppCompatActivity {
         setContentView(R.layout.activity_view_project);
         init();
 
+        totalCost = 0;
+        taskCost = 0;
+        resourceCost = 0;
 
 
         //get string intents
@@ -58,6 +65,7 @@ public class ViewProject extends AppCompatActivity {
         description = getIntent().getStringExtra("projects_description");
         startDate = getIntent().getStringExtra("start_date");
         endDate = getIntent().getStringExtra("end_date");
+
 
         //view tasks, query tasks from database by projectID
         Tasks_LayoutManager = new LinearLayoutManager(this);
@@ -116,7 +124,7 @@ public class ViewProject extends AppCompatActivity {
     private void getTasks(){
         //view tasks, query tasks from database by projectID
         //at the same time, calculate total cost of tasks
-        totalCost = 0;
+
         com.google.android.gms.tasks.Task<QuerySnapshot> docRef = dbSetUp.db.collection("Tasks")
                 .whereEqualTo("ProjectID", projectID)
                 .get()
@@ -140,21 +148,23 @@ public class ViewProject extends AppCompatActivity {
                                 int task_cost = Integer.parseInt(document.get("TaskCost").toString());
 
 
+
+
                                 taskk.setID(task_id);
                                 taskk.setName(task_name);
                                 taskk.setStart(start_dateTS);
                                 taskk.setEnd(end_dateTS);
                                 taskk.setCost(task_cost);
 
-                                totalCost+=task_cost;
-
+                                taskCost+=task_cost;
+                                calculateCost(task_id,taskCost);
                                 // Add to list
                                 tasks.add(taskk);
                                 Task_adapter.notifyDataSetChanged();
+
                             }
 
-                            totalCostTV.setText(totalCost+"");
-
+                            //totalCostTV.setText(totalCost+"");
 
 
                         }//if
@@ -167,4 +177,31 @@ public class ViewProject extends AppCompatActivity {
                 });//addOnCompleteListener
 
     }//getTasks
+ public void calculateCost(String taskID, final double taskCost){
+     com.google.android.gms.tasks.Task<QuerySnapshot> docRef = dbSetUp.
+     db.collection("Resource")
+             .whereEqualTo("taskID",taskID)
+             .get()
+             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                 @Override
+                 public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                     if (task.isSuccessful()) {
+
+                             for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                     int resource = Integer.parseInt(document.get("cost").toString());
+                                     resourceCost += resource;
+                                     totalCost = resourceCost + taskCost;
+                                     totalCostTV.setText(totalCost+"");
+
+                             }
+
+
+                     } else {
+
+                     }
+                 }
+             });
+
+ }
 }

@@ -52,6 +52,7 @@ public class AddTask extends AppCompatActivity {
     //var's used for resources info
     private String Rname;
     private String Rcost;
+    private String TaskID;
     private ArrayList<Resource> ResourceList;
     private boolean Resadded = false;
     //for sotre info in DB
@@ -87,6 +88,7 @@ public class AddTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+        TaskID = db.collection("Tasks").document().getId();
         ProjectID = getIntent().getStringExtra("project_id");
         //for test can't send the id
         if ( ProjectID == null ) {
@@ -99,7 +101,7 @@ public class AddTask extends AppCompatActivity {
         SDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialogStartDate = new DatePickerDialog(AddTask.this, FromDate, calendar
+                DatePickerDialog datePickerDialogStartDate = new DatePickerDialog(AddTask.this,R.style.DialogTheme, FromDate, calendar
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialogStartDate.getDatePicker().setMinDate(System.currentTimeMillis());
@@ -110,7 +112,7 @@ public class AddTask extends AppCompatActivity {
         EDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialogFinishDate = new DatePickerDialog(AddTask.this, TillDate, calendar
+                DatePickerDialog datePickerDialogFinishDate = new DatePickerDialog(AddTask.this,R.style.DialogTheme, TillDate, calendar
                         .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialogFinishDate.getDatePicker().setMinDate(System.currentTimeMillis());
@@ -191,7 +193,7 @@ public class AddTask extends AppCompatActivity {
                     if ( checkResources (linearLayout) ) {
                         //the resources info not empty
                         //added to the list
-                        ResourceList.add(new Resource (Rname, Integer.parseInt(Rcost)) );
+                        ResourceList.add(new Resource (Rname, Integer.parseInt(Rcost), TaskID) );
                     }
                 }
                 //check all fileds not empty && also check when Resources.getChildCount() == ResourceList.count()
@@ -277,7 +279,9 @@ public class AddTask extends AppCompatActivity {
             Map<String, Object> Res = new HashMap<>();
             Res.put("name", resources.getName());
             Res.put("cost", resources.getCost()+"");
-            db.collection("Resource").document(ResID)
+            Res.put("taskID", TaskID);
+
+        db.collection("Resource").document(ResID)
                     .set(Res)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -305,7 +309,7 @@ public class AddTask extends AppCompatActivity {
         }
         final Task task = new Task(Tname, Integer.parseInt(Tcost), FDTS, LDTS, resources);
         //store the task obj in firestore
-        String TaskID = db.collection("Tasks").document().getId();
+
         task.setID(TaskID);
         final Map<String, Object> Task = new HashMap<>();
         Task.put("Name", task.getName());
@@ -330,6 +334,8 @@ public class AddTask extends AppCompatActivity {
                         }
                     }
                 });
+
+
     }
 
 }

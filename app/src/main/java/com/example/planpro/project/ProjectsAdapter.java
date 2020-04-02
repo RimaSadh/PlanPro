@@ -77,11 +77,15 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         Project project = projectsList.get(position);
         holder.project_name.setText(project.getName());
-        holder.project_manager.setText(project.getProjectManager());
-        holder.start_date.setText(project.getStartDate());
-        holder.end_date.setText(project.getEndDate());
+        //holder.project_manager.setText(project.getProjectManager());
+       if(project.getStartDate() != null && project.getEndDate() != null) {
+            String start_date = new java.text.SimpleDateFormat("dd/MM/yyyy").format(project.getStartDate().toDate());
+            String end_date = new java.text.SimpleDateFormat("dd/MM/yyyy").format(project.getEndDate().toDate());
 
-        //holder.projects_description.setText(project.getDescription());
+            holder.start_date.setText(start_date);
+            holder.end_date.setText(end_date);
+
+        }//holder.projects_description.setText(project.getDescription());
     }
 
 
