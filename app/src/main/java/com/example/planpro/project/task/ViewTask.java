@@ -21,7 +21,7 @@ public class ViewTask extends AppCompatActivity {
 
     private ImageView back;
     private TextView taskNameTV, startDateTV, endDateTV, taskCostTV,resourcesTV;
-    private String taskId, taskName, startD, endD, resources;
+    private String taskId, taskName, startD, endD, resources="";
     private String taskC;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -71,7 +71,7 @@ public class ViewTask extends AppCompatActivity {
                                 String resourceN = document.get("name").toString();
                                 String resourceC = document.get("cost").toString();
 
-                                resources = "- " + resourceN + " | " + resourceC + " $\n";
+                                resources += "- " + resourceN + " | " + resourceC + " $"+" \n";
 
                             }
                             resourcesTV.setText(resources);
