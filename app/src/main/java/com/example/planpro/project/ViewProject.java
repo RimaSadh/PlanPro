@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,14 +38,13 @@ import java.util.List;
 public class ViewProject extends AppCompatActivity {
 
     private ImageView back;
-    private TextView projectNameTV, descriptionTV, startDateTV, endDateTV, totalCostTV;
+    private TextView projectNameTV, descriptionTV, startDateTV, endDateTV, totalCostTV, noTasks;
     private RecyclerView tasksRecyclerView;
     private RecyclerView.LayoutManager Tasks_LayoutManager;
     private TaskAdapter Task_adapter;
-    private dbSetUp DB = new dbSetUp();
     private String projectName, projectID, description, startDate, endDate;
     private double totalCost, resourceCost, taskCost;
-    ArrayList<Task> tasks = new ArrayList<Task>();
+    ArrayList<Task> tasks = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
@@ -52,6 +52,7 @@ public class ViewProject extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_project);
+
         init();
 
         totalCost = 0;
@@ -73,10 +74,8 @@ public class ViewProject extends AppCompatActivity {
         Task_adapter = new TaskAdapter(this, tasks);
         tasksRecyclerView.setAdapter(Task_adapter);
 
-        //call mathod
+        //call method
         getTasks();
-
-
 
         //set texts
         projectNameTV.setText(projectName);
@@ -86,14 +85,11 @@ public class ViewProject extends AppCompatActivity {
         totalCostTV.setText(totalCost+"");
 
 
-
         // Add task Button
-        FloatingActionButton fab = findViewById(R.id.fab);
+        Button fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 Intent intent = new Intent(view.getContext(), AddTask.class);
                 intent.putExtra("project_id", projectID);
                 startActivity(intent);
@@ -101,6 +97,7 @@ public class ViewProject extends AppCompatActivity {
         });
 
         getSupportActionBar().hide();
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +108,7 @@ public class ViewProject extends AppCompatActivity {
     }
 
     private void init(){
-        //find all views and textfields
+        //find all views and text fields
         back = findViewById(R.id.backButton);
         projectNameTV = findViewById(R.id.projectName);
         descriptionTV = findViewById(R.id.description);
@@ -119,13 +116,15 @@ public class ViewProject extends AppCompatActivity {
         endDateTV = findViewById(R.id.endDate);
         totalCostTV = findViewById(R.id.totalCost);
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
+        noTasks = findViewById(R.id.noTask);
+        noTasks.setVisibility(View.GONE);
     }
 
     private void getTasks(){
         //view tasks, query tasks from database by projectID
         //at the same time, calculate total cost of tasks
 
-        com.google.android.gms.tasks.Task<QuerySnapshot> docRef = dbSetUp.db.collection("Tasks")
+        db.collection("Tasks")
                 .whereEqualTo("ProjectID", projectID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -136,19 +135,16 @@ public class ViewProject extends AppCompatActivity {
 
                             tasks.clear();
 
-
+                            if(!task.getResult().isEmpty()){
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 final Task taskk = new Task();
 
-                                String task_id = document.getId().toString();
+                                String task_id = document.getId();
                                 String task_name = document.get("Name").toString();
                                 Timestamp start_dateTS = (Timestamp)document.get("EarlyStartDate");
                                 Timestamp end_dateTS = (Timestamp)document.get("EarlyFinishDate");
 
-                                int task_cost = Integer.parseInt(document.get("TaskCost").toString());
-
-
-
+                                double task_cost = Double.parseDouble(document.get("TaskCost").toString());
 
                                 taskk.setID(task_id);
                                 taskk.setName(task_name);
@@ -156,18 +152,22 @@ public class ViewProject extends AppCompatActivity {
                                 taskk.setEnd(end_dateTS);
                                 taskk.setCost(task_cost);
 
-                                taskCost+=task_cost;
+
+                                taskCost += task_cost;
                                 calculateCost(task_id,taskCost);
+
                                 // Add to list
                                 tasks.add(taskk);
                                 Task_adapter.notifyDataSetChanged();
 
-                            }
+                            }// end for
 
-                            //totalCostTV.setText(totalCost+"");
+                                noTasks.setVisibility(View.GONE);
 
+                        }}//if
+                        if(tasks.size() == 0)
+                            noTasks.setVisibility(View.VISIBLE);
 
-                        }//if
                     }// onComplete
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -176,9 +176,11 @@ public class ViewProject extends AppCompatActivity {
                     }
                 });//addOnCompleteListener
 
-    }//getTasks
- public void calculateCost(String taskID, final double taskCost){
-     com.google.android.gms.tasks.Task<QuerySnapshot> docRef = dbSetUp.
+    }
+
+
+    public void calculateCost(String taskID, final double taskCost){
+
      db.collection("Resource")
              .whereEqualTo("taskID",taskID)
              .get()
@@ -190,18 +192,23 @@ public class ViewProject extends AppCompatActivity {
                              for (QueryDocumentSnapshot document : task.getResult()) {
 
                                      int resource = Integer.parseInt(document.get("cost").toString());
-                                     resourceCost += resource;
-                                     totalCost = resourceCost + taskCost;
-                                     totalCostTV.setText(totalCost+"");
+                                     totalCost += resource;
+                                     //totalCost = resourceCost + taskCost;
 
                              }
-
-
-                     } else {
+                         totalCostTV.setText(totalCost+"");
 
                      }
                  }
              });
 
- }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tasks.clear();
+        getTasks();
+
+    }
 }

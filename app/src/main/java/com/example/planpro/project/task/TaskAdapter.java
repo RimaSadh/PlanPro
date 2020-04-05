@@ -29,7 +29,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
         public MyViewHolder(View view) {
             super(view);
 
-            //Id = id;
             task_name =  view.findViewById(R.id.Taskname);
             taskCost = view.findViewById(R.id.cost);
             start_date = view.findViewById(R.id.startDate);
@@ -41,10 +40,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
 
         @Override
         public void onClick(View view) {
-            /*//go to viewtask and pass task id to display details
+            //go to viewtask and pass task id to display details
             Intent intent = new Intent(view.getContext(), ViewTask.class);
-            intent.putExtra("task_id", tasks.get(getAdapterPosition()).getId());
-            mContext.startActivity(intent);*/
+            intent.putExtra("task_id", tasks.get(getAdapterPosition()).getID());
+            intent.putExtra("task_name", tasks.get(getAdapterPosition()).getName());
+            intent.putExtra("start_date", tasks.get(getAdapterPosition()).getStart());
+            intent.putExtra("end_date", tasks.get(getAdapterPosition()).getEnd());
+            intent.putExtra("task_cost", tasks.get(getAdapterPosition()).getCost()+"");
+
+            mContext.startActivity(intent);
         }
 
     }//End MyViewHolder Class
@@ -67,15 +71,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         Task task = tasks.get(position);
+
         holder.task_name.setText(task.getName());
         holder.taskCost.setText(task.getCost()+"");
-        String start_date = new java.text.SimpleDateFormat("dd/MM/yyyy").format(task.getStart().toDate());
-        String end_date = new java.text.SimpleDateFormat("dd/MM/yyyy").format(task.getEnd().toDate());
+
+        String start_date = task.getStart();
+        String end_date = task.getEnd();
 
         holder.start_date.setText(start_date);
         holder.end_date.setText(end_date);
 
-        //holder.projects_description.setText(project.getDescription());
     }
 
 
@@ -88,7 +93,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
 
     public void updateList(List<Task> list){
         if (list.isEmpty()){
-            Toast.makeText(this.mContext, "No club found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.mContext, "No task found", Toast.LENGTH_SHORT).show();
             tasks = new ArrayList<Task>();
             notifyDataSetChanged();
         }else{

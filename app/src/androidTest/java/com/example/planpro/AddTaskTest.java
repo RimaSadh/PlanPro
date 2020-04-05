@@ -31,7 +31,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.junit.Assert.*;
+
 @RunWith(AndroidJUnit4.class)
 public class AddTaskTest {
 
@@ -57,7 +57,7 @@ public class AddTaskTest {
             //name
             onView(withId(R.id.TaskName)).check(matches(isDisplayed()));
             //Resourses Info
-            onView(withId(R.id.ResourceName)).check(matches(isDisplayed()));
+            onView(withId(R.id.Resources)).check(matches(isDisplayed()));
             onView(withId(R.id.ResourceCost)).check(matches(isDisplayed()));
             //cost
             onView(withId(R.id.TaskCost)).check(matches(isDisplayed()));
@@ -83,7 +83,7 @@ public class AddTaskTest {
         //name
         onView(withId(R.id.TaskName)).perform(typeText(""));
         //Resourses Info
-        onView(withId(R.id.ResourceName)).perform(typeText(""));
+        onView(withId(R.id.Resources)).perform(typeText(""));
         onView(withId(R.id.ResourceCost)).perform(typeText(""));
         //cost
         onView(withId(R.id.TaskCost)).perform(typeText(""));
@@ -117,7 +117,7 @@ public class AddTaskTest {
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 4, 24));
         onView(withText("OK")).perform(click());
         //Resourses Info
-        onView(withId(R.id.ResourceName)).perform(typeText(""));
+        onView(withId(R.id.Resources)).perform(typeText(""));
         onView(withId(R.id.ResourceCost)).perform(typeText(""));
         //cost
         onView(withId(R.id.TaskCost)).perform(typeText("200"));
@@ -149,7 +149,7 @@ public class AddTaskTest {
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 2, 24));
         onView(withText("OK")).perform(click());
         //Resourses Info
-        onView(withId(R.id.ResourceName)).perform(typeText("Member"));
+        onView(withId(R.id.Resources)).perform(typeText("Member"));
         //close keyboard
         closeSoftKeyboard();
         onView(withId(R.id.ResourceCost)).perform(typeText("30"));
@@ -185,7 +185,7 @@ public class AddTaskTest {
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 4, 24));
         onView(withText("OK")).perform(click());
         //Resourses Info
-        onView(withId(R.id.ResourceName)).perform(typeText("Member"));
+        onView(withId(R.id.Resources)).perform(typeText("Member"));
         //close keyboard
         closeSoftKeyboard();
         onView(withId(R.id.ResourceCost)).perform(typeText("30"));
@@ -225,7 +225,7 @@ public class AddTaskTest {
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 4, 24));
         onView(withText("OK")).perform(click());
         //Resourses Info
-        onView(withId(R.id.ResourceName)).perform(typeText("Member"));
+        onView(withId(R.id.Resources)).perform(typeText("Member"));
         //close keyboard
         closeSoftKeyboard();
         onView(withId(R.id.ResourceCost)).perform(typeText("30"));
@@ -257,7 +257,7 @@ public class AddTaskTest {
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 4, 24));
         onView(withText("OK")).perform(click());
         //Resourses Info
-        onView(withId(R.id.ResourceName)).perform(typeText("Member"));
+        onView(withId(R.id.Resources)).perform(typeText("Member"));
         //close keyboard
         closeSoftKeyboard();
         onView(withId(R.id.ResourceCost)).perform(typeText("30"));
@@ -293,7 +293,7 @@ public class AddTaskTest {
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 4, 24));
         onView(withText("OK")).perform(click());
         //Resourses Info
-        onView(withId(R.id.ResourceName)).perform(typeText("Member"));
+        onView(withId(R.id.Resources)).perform(typeText("Member"));
         //close keyboard
         closeSoftKeyboard();
         onView(withId(R.id.ResourceCost)).perform(typeText("30"));

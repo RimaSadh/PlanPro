@@ -15,6 +15,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -31,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager Projects_LayoutManager;
     private ProjectsAdapter Projects_adapter;
     private List<Project> Projects = new ArrayList<>();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private dbSetUp DB = new dbSetUp();
+
     private SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
     private  Timestamp FDTS, LDTS;
 
@@ -59,16 +62,14 @@ public class MainActivity extends AppCompatActivity {
         // getSupportActionBar().hide();
 
         // Add Button
-        FloatingActionButton fab = findViewById(R.id.fab);
+        Button fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
                 startActivity(new Intent(getApplicationContext(), AddProject.class));
             }
         });
+
 
         // Projects RV setup
         rvProjects = findViewById(R.id.ProjectRV);
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getProjects(){
 
-        CollectionReference clubRef = dbSetUp.db.collection("Projects");
+        CollectionReference clubRef = db.collection("Projects");
         clubRef.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -100,30 +101,17 @@ public class MainActivity extends AppCompatActivity {
 
                                 String project_id = document.get("ProjectID").toString();
                                 String project_name = document.get("Name").toString();
-                               // String project_manager = document.get("ProjectManager").toString();
                                 String projects_description = document.get("Description").toString();
-                                String start_date = document.get("StartDate").toString();
-                                String end_date = document.get("EndDate").toString();
+                                Timestamp start_date = (Timestamp) document.get("StartDate");
+                                Timestamp end_date = (Timestamp) document.get("EndDate");
                                 String total_cost = document.get("TotalCost").toString();
 
 
-
-                                try {
-                                    Date StartD = DateFormat.parse(start_date);
-                                    FDTS = new Timestamp(StartD);
-                                    Date FinishD = DateFormat.parse(end_date);
-                                    LDTS = new Timestamp(FinishD);
-                                } catch (ParseException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                }
-
                                 project.setId(project_id);
                                 project.setName(project_name);
-                               // project.setProjectManager(project_manager);
                                 project.setDescription(projects_description);
-                                project.setStartDate(FDTS);
-                                project.setEndDate(LDTS);
+                                project.setStartDate(start_date);
+                                project.setEndDate(end_date);
                                 project.setTotalCost(Double.parseDouble(total_cost));
 
 

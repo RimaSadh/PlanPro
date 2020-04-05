@@ -10,10 +10,11 @@ public class Task {
     private String Name;
     private Timestamp Start;
     private Timestamp End;
-    private int Cost;
+    private double Cost;
     private ArrayList<Resource> resources;
 
-    public Task(String name, int cost,Timestamp start, Timestamp end,  ArrayList<Resource> resources) {
+    public Task(String id, String name, double cost,Timestamp start, Timestamp end,  ArrayList<Resource> resources) {
+        ID = id;
         Name = name;
         Start = start;
         End = end;
@@ -32,27 +33,29 @@ public class Task {
         Name = name;
     }
 
-    public Timestamp getStart() {
-        return Start;
+    public String getStart() {
+
+        return new java.text.SimpleDateFormat("EEE, d MMM yyyy").format(Start.toDate());
     }
 
     public void setStart(Timestamp start) {
         Start = start;
     }
 
-    public Timestamp getEnd() {
-        return End;
+    public String getEnd() {
+
+        return new java.text.SimpleDateFormat("EEE, d MMM yyyy").format(End.toDate());
     }
 
     public void setEnd(Timestamp end) {
         End = end;
     }
 
-    public int getCost() {
+    public double getCost() {
         return Cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         Cost = cost;
     }
 

@@ -5,21 +5,22 @@ import com.google.firebase.Timestamp;
 public class Project {
 
     private String Id;
-    private String name, description, projectManager;
+    private String name, description;
     private Timestamp startDate, endDate;
     private double totalCost;
 
     public Project(){}
 
-    public Project(String id, String name, String description, String projectManager, Timestamp startDate, Timestamp endDate, double totalCost ){
+    public Project(String id, String name, String description, Timestamp startDate, Timestamp endDate, double totalCost ){
         this.Id = id;
         this.name = name;
         this.description = description;
-        this.projectManager = projectManager;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalCost = totalCost;
     }
+
+
     public Project(String name, String description, Timestamp startDate, Timestamp endDate ){
 
         this.name = name;
@@ -54,24 +55,17 @@ public class Project {
         this.description = description;
     }
 
-    public String getProjectManager() {
-        return projectManager;
-    }
+    public String getStartDate() {
 
-    public void setProjectManager(String projectManager) {
-        this.projectManager = projectManager;
-    }
-
-    public Timestamp getStartDate() {
-        return startDate;
+        return new java.text.SimpleDateFormat("EEE, d MMM yyyy").format(startDate.toDate());
     }
 
     public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
-    public Timestamp getEndDate() {
-        return endDate;
+    public String getEndDate() {
+        return new java.text.SimpleDateFormat("EEE, d MMM yyyy").format(endDate.toDate());
     }
 
     public void setEndDate(Timestamp endDate) {

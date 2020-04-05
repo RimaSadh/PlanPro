@@ -12,20 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:elevation="3dp"
+        android:elevation="4dp"
         android:clickable="true"
         app:cardCornerRadius="5dp"
         android:background="@color/white"
         >
-
-        <LinearLayout
-            android:id="@+id/project_card_ll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:background="#F5F5F5"
-            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,9 +33,41 @@
                     android:paddingLeft="10dp"
                     android:paddingTop="2dp"
                     android:paddingRight="10dp"
-                    android:textColor="@color/red"
+                    android:textColor="@color/blue"
                     android:text="Project name"
-                    android:textSize="20sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/sd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:textColor="@color/green"
+                        android:text="Start Date"
+                        android:layout_weight="1"
+                        android:textSize="15sp"
+                        android:paddingLeft="10dp" />
+
+                    <TextView
+                        android:id="@+id/ed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="2dp"
+                        android:textColor="@color/red"
+                        android:text="End Date"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -52,50 +75,30 @@
                     android:orientation="horizontal">
 
 
-                <TextView
-                    android:id="@+id/pm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
-                    android:layout_weight="4"
-                    android:textColor="@color/green"
-                    android:text="Project Manager"
-                    android:textSize="15sp"
-                    android:paddingLeft="10dp" />
+                    <TextView
+                        android:id="@+id/sdTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:textColor="@color/black"
+                        android:text="SD"
+                        android:layout_weight="1"
+                        android:textSize="15sp"
+                        android:paddingLeft="10dp" />
+
+                    <TextView
+                        android:id="@+id/edTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="2dp"
+                        android:textColor="@color/black"
+                        android:text="ED"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
                 </LinearLayout>
-
-        </LinearLayout>
-
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-                android:layout_weight="4"
-                >
-
-            <TextView
-                android:id="@+id/sd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:textColor="@color/yellow"
-                android:text="Start Date"
-                android:layout_weight="1"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/ed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="3dp"
-                android:paddingRight="2dp"
-                android:textColor="@color/yellow"
-                android:text="End Date"
-                android:layout_weight="1"
-                android:textSize="12sp" />
-
-
-        </LinearLayout>
 
         </LinearLayout>
 

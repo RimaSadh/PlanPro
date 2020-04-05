@@ -6,15 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
-        <item name= "android:textViewStyle" > @style/MTextViewStyle </item>
-        <item name= "android:buttonStyle" > @style/MButtonStyle </item>
-    </style>
-
-    <style name= "MTextViewStyle" parent= "android:Widget.TextView" >
-        <item name= "android:fontFamily" > montserrat </item>
-    </style>
-    <style name= "MButtonStyle" parent= "android:Widget.Holo.Button" >
-        <item name= "android:fontFamily" > montserrat </item>
     </style>
 
     <style name="AppTheme.NoActionBar">

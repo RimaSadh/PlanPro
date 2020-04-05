@@ -38,6 +38,7 @@ public class AddProject extends AppCompatActivity {
     private EditText name, desc;
     private Calendar calendar = Calendar.getInstance();
     private SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+    //EEE, d MMM yyyy
     private Date StartD;
     private Date FinishD;
     private Timestamp FDTS;
@@ -49,7 +50,6 @@ public class AddProject extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            // TODO Auto-generated method stub
             calendar.set(Calendar.YEAR,year);
             calendar.set(Calendar.MONTH, monthOfYear);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -61,7 +61,6 @@ public class AddProject extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            // TODO Auto-generated method stub
             calendar.set(Calendar.YEAR,year);
             calendar.set(Calendar.MONTH, monthOfYear);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -84,7 +83,6 @@ public class AddProject extends AppCompatActivity {
         desc = findViewById(R.id.description);
 
 
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +102,6 @@ public class AddProject extends AppCompatActivity {
                                 , start.getText().toString(), end.getText().toString());
                     }
                 }
-
             }
         });
 
@@ -119,6 +116,7 @@ public class AddProject extends AppCompatActivity {
             }
 
         });
+
         end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +127,7 @@ public class AddProject extends AppCompatActivity {
                 datePickerDialogFinishDate.show();
             }
         });
+
     }
 
 
@@ -140,6 +139,8 @@ public class AddProject extends AppCompatActivity {
         Toast.makeText(AddProject.this, "All Fields Required", Toast.LENGTH_LONG).show();
         return false;
     }
+
+
     private boolean checkDays (String SDate, String EDate) {
         Date CurrentDate = new Date();
         //convert string to date to used in compare
@@ -148,7 +149,6 @@ public class AddProject extends AppCompatActivity {
             FinishD = DateFormat.parse(EDate);
         }
         catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         // check if end day before start day
@@ -158,6 +158,8 @@ public class AddProject extends AppCompatActivity {
         }
         return true;
     }
+
+
     private void addProject (String name,String desc, String SDate, String EDate) {
         try {
             StartD = DateFormat.parse(SDate);
@@ -168,6 +170,7 @@ public class AddProject extends AppCompatActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
         final Project pro = new Project(name, desc, FDTS, LDTS);
 
         String proID = db.collection("Projects").document().getId();

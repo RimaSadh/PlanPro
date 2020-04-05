@@ -8,10 +8,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -36,6 +36,7 @@ public class AddTask extends AppCompatActivity {
     private Button SDate;
     private Button EDate;
     private LinearLayout Resources;
+    private ImageView back;
     private EditText RName;
     private EditText RCost;
     private EditText TCost;
@@ -59,35 +60,13 @@ public class AddTask extends AppCompatActivity {
     private String ProjectID;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    //for from day
-    private final DatePickerDialog.OnDateSetListener FromDate = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            // TODO Auto-generated method stub
-            calendar.set(Calendar.YEAR,year);
-            calendar.set(Calendar.MONTH, monthOfYear);
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            SDate.setText(DateFormat.format(calendar.getTime()));
-        }
-    };
-    //for end day
-    private final DatePickerDialog.OnDateSetListener TillDate = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            // TODO Auto-generated method stub
-            calendar.set(Calendar.YEAR,year);
-            calendar.set(Calendar.MONTH, monthOfYear);
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            EDate.setText(DateFormat.format(calendar.getTime()));
-        }
-    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+
         TaskID = db.collection("Tasks").document().getId();
         ProjectID = getIntent().getStringExtra("project_id");
         //for test can't send the id
@@ -95,7 +74,9 @@ public class AddTask extends AppCompatActivity {
             ProjectID = "gQSP57vqXzCZ5vLqtNiI";
         }
         //set for edit texts and buttons
-        Setting ();
+        Setting();
+
+        back = findViewById(R.id.backButton);
 
         //the start day when click
         SDate.setOnClickListener(new View.OnClickListener() {
@@ -137,12 +118,11 @@ public class AddTask extends AppCompatActivity {
                 EditText rName = new EditText(getApplicationContext());
                 rName.setHint("Resource Name"+Resources.getChildCount());
                 rName.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT ));
-                //rName.setBackgroundResource(R.drawable.custom_edit_text);
                 rName.setBackground(RName.getBackground());
                 rName.setWidth(RName.getWidth());
-                rName.setHeight(RName.getHeight()+30);
-                rName.setBottom(RCost.getBottom()+50);
-                //String idName = "ResourceName"+Resources.getChildCount();
+                rName.setHeight(RName.getHeight());
+                rName.setBottom(10);
+                rName.setPadding(5,5,5,5);
                 rName.setId(Resources.getChildCount());
                 Log.d("ID", rName.getId()+"");
                 //add the created edit text to linear layout
@@ -152,13 +132,12 @@ public class AddTask extends AppCompatActivity {
                 EditText rCost = new EditText(getApplicationContext());
                 rCost.setHint("Resource Cost"+Resources.getChildCount());
                 rCost.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                //rCost.setBackgroundResource(R.drawable.custom_edit_text);
                 rCost.setBackground(RCost.getBackground());
                 rCost.setWidth(RCost.getWidth());
-                rCost.setHeight(RCost.getHeight()+30);
-                rCost.setTop(RCost.getBottom());
+                rCost.setHeight(RCost.getHeight());
+                rCost.setPadding(5,5,5,5);
+                rCost.setTop(10);
                 rCost.setInputType(RCost.getInputType());
-                //String idCost = "ResourceCost"+Resources.getChildCount();
                 rCost.setId(Resources.getChildCount());
                 Log.d("ID", rCost.getId()+"");
                 //add the created edit text to linear layout
@@ -216,16 +195,46 @@ public class AddTask extends AppCompatActivity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         getSupportActionBar().hide();
     }
+
+
+    //for from day
+    private final DatePickerDialog.OnDateSetListener FromDate = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            calendar.set(Calendar.YEAR,year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            SDate.setText(DateFormat.format(calendar.getTime()));
+        }
+    };
+    //for end day
+    private final DatePickerDialog.OnDateSetListener TillDate = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            calendar.set(Calendar.YEAR,year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            EDate.setText(DateFormat.format(calendar.getTime()));
+        }
+    };
 
     private void Setting () {
         TName = findViewById(R.id.TaskName);
         SDate = findViewById(R.id.StartButton);
         EDate = findViewById(R.id.EndButton);
         Resources = findViewById(R.id.Rlinear);
-        RName = findViewById(R.id.ResourceName);
+        RName = findViewById(R.id.Resources);
         RCost = findViewById(R.id.ResourceCost);
         TCost = findViewById(R.id.TaskCost);
         AddMoreRes = findViewById(R.id.AddMoreRe);
@@ -261,7 +270,6 @@ public class AddTask extends AppCompatActivity {
             FinishD = DateFormat.parse(EDate);
         }
         catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         // check if end day before start day
@@ -290,7 +298,7 @@ public class AddTask extends AppCompatActivity {
                                 Log.d("Added","Success");
                                 Resadded = task.isSuccessful();
                             } else {
-                                Log.d("Added","error");
+                                Log.d("Added","Error");
                             }
                         }
                     });
@@ -304,20 +312,21 @@ public class AddTask extends AppCompatActivity {
             FinishD = DateFormat.parse(EDate);
             LDTS = new Timestamp(FinishD);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        final Task task = new Task(Tname, Integer.parseInt(Tcost), FDTS, LDTS, resources);
+
+        final Task task = new Task(TaskID, Tname, Double.parseDouble(Tcost), FDTS, LDTS, resources);
         //store the task obj in firestore
 
-        task.setID(TaskID);
         final Map<String, Object> Task = new HashMap<>();
         Task.put("Name", task.getName());
         Task.put("TaskCost", task.getCost()+"");
-        Task.put("EarlyStartDate", task.getStart());
-        Task.put("EarlyFinishDate", task.getEnd());
+        Task.put("EarlyStartDate", FDTS);
+        Task.put("EarlyFinishDate", LDTS);
         Task.put("ProjectID", ProjectID);
+
         Log.d("Size Array",resources.size()+"" );
+
         for (int i=0; i<resources.size(); i++)
             Task.put("ResourceID"+i, resources.get(i).getID());
 
@@ -327,14 +336,13 @@ public class AddTask extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(AddTask.this, "The Task Added", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddTask.this, "Task Added Successfully", Toast.LENGTH_LONG).show();
                             finish();
                         } else {
-                            Toast.makeText(AddTask.this, "The Task Not Added Try again", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddTask.this, "Fail To Add Task, Please Try Again", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
-
 
     }
 

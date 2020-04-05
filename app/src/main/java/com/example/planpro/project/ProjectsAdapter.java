@@ -25,7 +25,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView project_name, projects_description, project_manager, start_date, end_date;
+        public TextView project_name, projects_description, start_date, end_date;
         private CardView card;
 
         public MyViewHolder(View view) {
@@ -34,9 +34,8 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
             //Id = id;
             project_name =  view.findViewById(R.id.name);
             //projects_description = view.findViewById(R.id.description);
-            project_manager = view.findViewById(R.id.pm);
-            start_date = view.findViewById(R.id.sd);
-            end_date = view.findViewById(R.id.ed);
+            start_date = view.findViewById(R.id.sdTV);
+            end_date = view.findViewById(R.id.edTV);
 
             card = view.findViewById(R.id.project_card);
             card.setOnClickListener(this);
@@ -49,7 +48,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
             intent.putExtra("project_id", projectsList.get(getAdapterPosition()).getId());
             intent.putExtra("project_name", projectsList.get(getAdapterPosition()).getName());
             intent.putExtra("projects_description", projectsList.get(getAdapterPosition()).getDescription());
-            intent.putExtra("project_manager", projectsList.get(getAdapterPosition()).getProjectManager());
             intent.putExtra("start_date",projectsList.get(getAdapterPosition()).getStartDate());
             intent.putExtra("end_date", projectsList.get(getAdapterPosition()).getEndDate());
 
@@ -77,15 +75,16 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         Project project = projectsList.get(position);
         holder.project_name.setText(project.getName());
-        //holder.project_manager.setText(project.getProjectManager());
+
        if(project.getStartDate() != null && project.getEndDate() != null) {
-            String start_date = new java.text.SimpleDateFormat("dd/MM/yyyy").format(project.getStartDate().toDate());
-            String end_date = new java.text.SimpleDateFormat("dd/MM/yyyy").format(project.getEndDate().toDate());
 
-            holder.start_date.setText(start_date);
-            holder.end_date.setText(end_date);
+           String start_date = project.getStartDate();
+           String end_date = project.getEndDate();
 
-        }//holder.projects_description.setText(project.getDescription());
+           holder.start_date.setText(start_date);
+           holder.end_date.setText(end_date);
+
+        }
     }
 
 
@@ -98,7 +97,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
 
     public void updateList(List<Project> list){
         if (list.isEmpty()){
-            Toast.makeText(this.mContext, "No club found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.mContext, "No Projects found", Toast.LENGTH_SHORT).show();
             projectsList = new ArrayList<Project>();
             notifyDataSetChanged();
         }else{
