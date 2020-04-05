@@ -4,13 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.planpro.R;
+import com.example.planpro.project.ViewProject;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -23,6 +32,7 @@ public class ViewTask extends AppCompatActivity {
     private TextView taskNameTV, startDateTV, endDateTV, taskCostTV,resourcesTV;
     private String taskId, taskName, startD, endD, resources="";
     private String taskC;
+    private Button delete;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -56,6 +66,61 @@ public class ViewTask extends AppCompatActivity {
             }
         });
 
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ViewTask.this);
+                dialog.setTitle("Delete Task");
+                dialog.setMessage("Are you sure you want to delete this task ? ");
+                dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.collection("Tasks")
+                                .document(taskId)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if(document.exists()){
+                                                DocumentReference d= document.getReference();
+                                                        d.delete();
+
+                                                    }
+
+
+                                            Toast.makeText(ViewTask.this, "Task deleted",
+                                                    Toast.LENGTH_SHORT).show();
+                                            Intent in = new Intent(ViewTask.this, ViewProject.class);
+                                            startActivity(in);
+                                            finish();
+                                                }
+
+
+
+                                        else {
+                                            Toast.makeText(ViewTask.this, task.getException().getMessage(),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }); //end dialog onComplete
+                    }
+
+
+
+                });// end dialog onclick
+
+                dialog.setNegativeButton("Cancel",null);
+
+                AlertDialog alertDialog =  dialog.create();
+                alertDialog.show();
+
+            }
+        });
+
+
     }
 
     private void getResource() {
@@ -82,7 +147,7 @@ public class ViewTask extends AppCompatActivity {
 
     private void init() {
         back = findViewById(R.id.backButton);
-
+        delete = findViewById(R.id.Delete);
         taskNameTV = findViewById(R.id.textView2);
         startDateTV = findViewById(R.id.Start);
         endDateTV = findViewById(R.id.End);

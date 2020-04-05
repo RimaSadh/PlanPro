@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.planpro.MainActivity;
 import com.example.planpro.dbSetUp;
 import com.example.planpro.project.task.TaskAdapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +25,7 @@ import android.widget.Toast;
 import com.example.planpro.R;
 import com.example.planpro.project.task.AddTask;
 import com.example.planpro.project.task.Task;
+import com.example.planpro.project.task.ViewTask;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,7 +46,8 @@ public class ViewProject extends AppCompatActivity {
     private RecyclerView tasksRecyclerView;
     private RecyclerView.LayoutManager Tasks_LayoutManager;
     private TaskAdapter Task_adapter;
-    private String projectName, projectID, description, startDate, endDate;
+    private Button delete;
+    private String projectName, projectID, description, startDate, endDate, taskID;
     private double totalCost, resourceCost, taskCost;
     ArrayList<Task> tasks = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -74,8 +79,12 @@ public class ViewProject extends AppCompatActivity {
         Task_adapter = new TaskAdapter(this, tasks);
         tasksRecyclerView.setAdapter(Task_adapter);
 
+
         //call method
         getTasks();
+        // calculate cost
+        calculateCost();
+
 
         //set texts
         projectNameTV.setText(projectName);
@@ -83,6 +92,7 @@ public class ViewProject extends AppCompatActivity {
         startDateTV.setText(startDate);
         endDateTV.setText(endDate);
         totalCostTV.setText(totalCost+"");
+
 
 
         // Add task Button
@@ -105,6 +115,61 @@ public class ViewProject extends AppCompatActivity {
             }
         });
 
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ViewProject.this);
+                dialog.setTitle("Delete Project");
+                dialog.setMessage("Are you sure you want to delete this project ? ");
+                dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.collection("Projects")
+                                .document(projectID)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if(document.exists()){
+                                                DocumentReference d= document.getReference();
+                                                d.delete();
+
+                                            }
+
+
+                                            Toast.makeText(ViewProject.this, "Project deleted",
+                                                    Toast.LENGTH_SHORT).show();
+                                            Intent in = new Intent(ViewProject.this, MainActivity.class);
+                                            startActivity(in);
+                                            finish();
+                                        }
+
+
+
+                                        else {
+                                            Toast.makeText(ViewProject.this, task.getException().getMessage(),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }); //end dialog onComplete
+                    }
+
+
+
+                });// end dialog onclick
+
+                dialog.setNegativeButton("Cancel",null);
+
+                AlertDialog alertDialog =  dialog.create();
+                alertDialog.show();
+
+            }
+        });
+
+
     }
 
     private void init(){
@@ -118,6 +183,7 @@ public class ViewProject extends AppCompatActivity {
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         noTasks = findViewById(R.id.noTask);
         noTasks.setVisibility(View.GONE);
+        delete = findViewById(R.id.Delete);
     }
 
     private void getTasks(){
@@ -153,8 +219,7 @@ public class ViewProject extends AppCompatActivity {
                                 taskk.setCost(task_cost);
 
 
-                                taskCost += task_cost;
-                                calculateCost(task_id,taskCost);
+
 
                                 // Add to list
                                 tasks.add(taskk);
@@ -179,28 +244,77 @@ public class ViewProject extends AppCompatActivity {
     }
 
 
-    public void calculateCost(String taskID, final double taskCost){
+    public void calculateCost(){
 
-     db.collection("Resource")
-             .whereEqualTo("taskID",taskID)
-             .get()
-             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                 @Override
-                 public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-                     if (task.isSuccessful()) {
+        db.collection("Tasks")
+                .whereEqualTo("ProjectID", projectID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                        final double costs [] = new double[1000];
 
-                             for (QueryDocumentSnapshot document : task.getResult()) {
+                        int i = 0;
 
-                                     int resource = Integer.parseInt(document.get("cost").toString());
-                                     totalCost += resource;
-                                     //totalCost = resourceCost + taskCost;
+                         double totalCostCost=0;
+                        if(task.isSuccessful()){
 
-                             }
-                         totalCostTV.setText(totalCost+"");
+                            tasks.clear();
 
-                     }
-                 }
-             });
+                            if(!task.getResult().isEmpty()){
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                    taskID = document.getId();
+                                    double task_cost = Double.parseDouble(document.get("TaskCost").toString());
+                                    taskCost += task_cost;
+                                    db.collection("Resource")
+                                            .whereEqualTo("taskID",taskID)
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        if(!task.getResult().isEmpty()){
+                                                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                                                double resource = Double.parseDouble(document.get("cost").toString());
+                                                                resourceCost += resource;
+
+
+                                                            }
+                                                        }
+
+
+
+                                                    }
+                                                }
+                                            });
+
+                                    totalCost += resourceCost + taskCost;
+                                    costs[i] = totalCost;
+                                    i++;
+
+                                }// end for
+
+
+                            }}
+                        for(int j=0; j<costs.length; j++){
+                            totalCostCost += costs[j];
+                        }
+                        totalCostTV.setText( totalCostCost+"");
+
+                        //i
+
+                    }// onComplete
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });//addOnCompleteListener
+
+
 
     }
 
