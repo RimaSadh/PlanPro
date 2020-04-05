@@ -93,8 +93,7 @@ public class ViewTask extends AppCompatActivity {
 
                                             Toast.makeText(ViewTask.this, "Task deleted",
                                                     Toast.LENGTH_SHORT).show();
-                                            Intent in = new Intent(ViewTask.this, ViewProject.class);
-                                            startActivity(in);
+
                                             finish();
                                                 }
 
