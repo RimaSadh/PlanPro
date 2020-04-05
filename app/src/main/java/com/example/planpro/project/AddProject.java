@@ -178,8 +178,8 @@ public class AddProject extends AppCompatActivity {
         final Map<String, Object> Pro = new HashMap<>();
         Pro.put("Name", pro.getName());
         Pro.put("Description", pro.getDescription());
-        Pro.put("StartDate", pro.getStartDate());
-        Pro.put("EndDate", pro.getEndDate());
+        Pro.put("StartDate", FDTS);
+        Pro.put("EndDate", LDTS);
         Pro.put("ProjectID", proID);
         Pro.put("TotalCost", 0);
 
