@@ -2,6 +2,7 @@ package com.example.planpro.project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
             intent.putExtra("projects_description", projectsList.get(getAdapterPosition()).getDescription());
             intent.putExtra("start_date",projectsList.get(getAdapterPosition()).getStartDate());
             intent.putExtra("end_date", projectsList.get(getAdapterPosition()).getEndDate());
-
+            intent.putExtra("late_end", projectsList.get(getAdapterPosition()).getLateEnd());
             mContext.startActivity(intent);
         }
 

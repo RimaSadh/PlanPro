@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.planpro.MainActivity;
-import com.example.planpro.dbSetUp;
 import com.example.planpro.project.task.TaskAdapter;
 
 import android.annotation.SuppressLint;
@@ -17,7 +15,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,10 +22,8 @@ import android.widget.Toast;
 import com.example.planpro.R;
 import com.example.planpro.project.task.AddTask;
 import com.example.planpro.project.task.Task;
-import com.example.planpro.project.task.ViewTask;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -37,17 +32,16 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ViewProject extends AppCompatActivity {
 
     private ImageView back;
-    private TextView projectNameTV, descriptionTV, startDateTV, endDateTV, totalCostTV, noTasks;
+    private TextView projectNameTV, descriptionTV, startDateTV, endDateTV, lateEndDateTV, totalCostTV, noTasks;
     private RecyclerView tasksRecyclerView;
     private RecyclerView.LayoutManager Tasks_LayoutManager;
     private TaskAdapter Task_adapter;
     private Button delete;
-    private String projectName, projectID, description, startDate, endDate, taskID;
+    private String projectName, projectID, description, startDate, endDate, taskID, LateDate;
     private double totalCost, resourceCost, taskCost;
     ArrayList<Task> tasks = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -72,6 +66,27 @@ public class ViewProject extends AppCompatActivity {
         description = getIntent().getStringExtra("projects_description");
         startDate = getIntent().getStringExtra("start_date");
         endDate = getIntent().getStringExtra("end_date");
+        LateDate = getIntent().getStringExtra("late_end");
+
+        //for test can't send the extra for intent //Don't removed just update the value
+        if ( projectID == null ) {
+            projectID ="KEMUHdFjORgcUxujCT64";
+        }
+        if ( projectName == null ) {
+            projectName ="GP";
+        }
+        if ( description == null ) {
+            description ="This Project Of Graduation Project For Second Term";
+        }
+        if ( startDate == null ) {
+            startDate ="Sun,2 Aug 2020";
+        }
+        if ( endDate == null ) {
+            endDate ="Fri,2 Oct 2020";
+        }
+        if ( LateDate == null ) {
+            LateDate ="Fri,1 Jan 2021";
+        }
 
 
         //view tasks, query tasks from database by projectID
@@ -90,6 +105,7 @@ public class ViewProject extends AppCompatActivity {
         descriptionTV.setText(description);
         startDateTV.setText(startDate);
         endDateTV.setText(endDate);
+        lateEndDateTV.setText(LateDate);
 
 
         // Add task Button
@@ -99,6 +115,9 @@ public class ViewProject extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), AddTask.class);
                 intent.putExtra("project_id", projectID);
+                intent.putExtra("start_Date", startDate);
+                intent.putExtra("end_Date", endDate);
+                intent.putExtra("late_end", LateDate);
                 startActivity(intent);
             }
         });
@@ -138,7 +157,7 @@ public class ViewProject extends AppCompatActivity {
 
 
                                             Toast.makeText(ViewProject.this, "Project deleted",
-                                                    Toast.LENGTH_SHORT).show();
+                                                    Toast.LENGTH_LONG).show();
                                             finish();
                                         }
 
@@ -173,6 +192,7 @@ public class ViewProject extends AppCompatActivity {
         descriptionTV = findViewById(R.id.description);
         startDateTV = findViewById(R.id.startDate);
         endDateTV = findViewById(R.id.endDate);
+        lateEndDateTV = findViewById(R.id.lateEndDate);
         totalCostTV = findViewById(R.id.totalCost);
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         noTasks = findViewById(R.id.noTask);

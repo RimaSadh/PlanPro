@@ -6,7 +6,12 @@ public class Project {
 
     private String Id;
     private String name, description;
-    private Timestamp startDate, endDate;
+    private Timestamp startDate;
+    private Timestamp endDate;
+    private Timestamp lateEnd;
+
+
+
     private double totalCost;
 
     public Project(){}
@@ -66,6 +71,14 @@ public class Project {
 
     public String getEndDate() {
         return new java.text.SimpleDateFormat("EEE, d MMM yyyy").format(endDate.toDate());
+    }
+
+    public String getLateEnd() {
+        return new java.text.SimpleDateFormat("EEE, d MMM yyyy").format(lateEnd.toDate());
+    }
+
+    public void setLateEnd(Timestamp lateEnd) {
+        this.lateEnd = lateEnd;
     }
 
     public void setEndDate(Timestamp endDate) {

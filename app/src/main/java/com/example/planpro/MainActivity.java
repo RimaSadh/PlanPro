@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                                 String projects_description = document.get("Description").toString();
                                 Timestamp start_date = (Timestamp) document.get("StartDate");
                                 Timestamp end_date = (Timestamp) document.get("EndDate");
+                                Timestamp late_date = (Timestamp) document.get("LateEnd");
                                 String total_cost = document.get("TotalCost").toString();
 
 
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                                 project.setStartDate(start_date);
                                 project.setEndDate(end_date);
                                 project.setTotalCost(Double.parseDouble(total_cost));
+                                project.setLateEnd(late_date);
 
 
                                 // Add to list

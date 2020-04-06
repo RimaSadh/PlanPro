@@ -1,5 +1,6 @@
 package com.example.planpro;
 
+import android.content.Intent;
 import android.widget.DatePicker;
 
 import com.example.planpro.project.task.AddTask;
@@ -23,6 +24,7 @@ import androidx.test.rule.ActivityTestRule;
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.doubleClick;
 import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withHint;
@@ -49,8 +51,8 @@ public class AddTaskTest {
         IdlingResource idlingResource = new ElapsedTimeIdlingResource(5000);
         try {
             IdlingRegistry.getInstance().register(idlingResource);
-            addTask = activityTestRule.getActivity();
-
+           // addTask = activityTestRule.getActivity();
+            activityTestRule.launchActivity(new Intent());
             //check the activity is visible
             onView(withId(R.id.AddTask)).check(matches(isDisplayed()));
             //check edit texts visible
@@ -110,7 +112,7 @@ public class AddTaskTest {
         //select date for start and end
         //click the start button
         onView(withId(R.id.StartButton)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 3, 24));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 9, 24));
         onView(withText("OK")).perform(click());
         //click the end button
         onView(withId(R.id.EndButton)).perform(click());
@@ -133,6 +135,43 @@ public class AddTaskTest {
     }
 
     @Test
+    public void StartTaskBeofreStartPRJ () {
+        //leave all fields empty and Date buttons not clicked
+        //name
+        onView(withId(R.id.TaskName)).perform(typeText("Controlling"));
+        //close keyboard
+        closeSoftKeyboard();
+        //select date for start and end
+        //click the start button
+        onView(withId(R.id.StartButton)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 7, 21));
+        onView(withText("OK")).perform(click());
+        //click the end button
+        onView(withId(R.id.EndButton)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 9, 13));
+        onView(withText("OK")).perform(click());
+        //Resourses Info
+        onView(withId(R.id.Resources)).perform(typeText("Member"));
+        //close keyboard
+        closeSoftKeyboard();
+        onView(withId(R.id.ResourceCost)).perform(typeText("30"));
+        //close keyboard
+        closeSoftKeyboard();
+        //cost
+        onView(withId(R.id.TaskCost)).perform(typeText("200"));
+        //close keyboard
+        closeSoftKeyboard();
+            //click confirm button
+            onView(withId(R.id.Create)).perform(click());
+            // check toast visibility
+            //for resources fields
+            onView(withText("The Chosen Start Date Must Not Before Project Date"))
+                    .inRoot(new ToastMatcher())
+                    .check(matches(withText("The Chosen Start Date Must Not Before Project Date")));
+    }
+
+
+    @Test
     public void EndBeofreStart () {
         //leave all fields empty and Date buttons not clicked
         //name
@@ -142,11 +181,11 @@ public class AddTaskTest {
         //select date for start and end
         //click the start button
         onView(withId(R.id.StartButton)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 3, 24));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 8, 24));
         onView(withText("OK")).perform(click());
         //click the end button
         onView(withId(R.id.EndButton)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 2, 24));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 8, 14));
         onView(withText("OK")).perform(click());
         //Resourses Info
         onView(withId(R.id.Resources)).perform(typeText("Member"));
@@ -161,11 +200,11 @@ public class AddTaskTest {
         closeSoftKeyboard();
         //click confirm button
         onView(withId(R.id.Create)).perform(click());
-        // check toast visibility
-        //for resources fields
-        onView(withText("The End Day must be after or same as Start Day"))
-                .inRoot(new ToastMatcher())
-                .check(matches(withText("The End Day must be after or same as Start Day")));
+            // check toast visibility
+            //for resources fields
+            onView(withText("The End Day must be after or same as Start Day"))
+                    .inRoot(new ToastMatcher())
+                    .check(matches(withText("The End Day must be after or same as Start Day")));
     }
 
     @Test
@@ -178,7 +217,7 @@ public class AddTaskTest {
         //select date for start and end
         //click the start button
         onView(withId(R.id.StartButton)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 3, 24));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 8, 24));
         onView(withText("OK")).perform(click());
         //click the end button
         onView(withId(R.id.EndButton)).perform(click());
@@ -241,7 +280,7 @@ public class AddTaskTest {
     }
 
     @Test
-    public void AddTaskSuccessOneRes () {
+    public void FinshTaskAfterPRJ () {
         //leave all fields empty and Date buttons not clicked
         //name
         onView(withId(R.id.TaskName)).perform(typeText("Controlling"));
@@ -250,11 +289,11 @@ public class AddTaskTest {
         //select date for start and end
         //click the start button
         onView(withId(R.id.StartButton)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 3, 24));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 8, 21));
         onView(withText("OK")).perform(click());
         //click the end button
         onView(withId(R.id.EndButton)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 4, 24));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 9, 13));
         onView(withText("OK")).perform(click());
         //Resourses Info
         onView(withId(R.id.Resources)).perform(typeText("Member"));
@@ -269,11 +308,47 @@ public class AddTaskTest {
         closeSoftKeyboard();
         //click confirm button
         onView(withId(R.id.Create)).perform(click());
-        // check toast visibility
-        //for resources fields
-        onView(withText("The Task Added"))
-                .inRoot(new ToastMatcher())
-                .check(matches(withText("The Task Added")));
+            // check toast visibility
+            //for resources fields
+            onView(withText("Task Added Successfully"))
+                    .inRoot(new ToastMatcher())
+                    .check(matches(withText("Task Added Successfully")));
+    }
+
+    @Test
+    public void AddTaskSuccessOneRes () {
+        //leave all fields empty and Date buttons not clicked
+        //name
+        onView(withId(R.id.TaskName)).perform(typeText("Controlling"));
+        //close keyboard
+        closeSoftKeyboard();
+        //select date for start and end
+        //click the start button
+        onView(withId(R.id.StartButton)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 8, 24));
+        onView(withText("OK")).perform(click());
+        //click the end button
+        onView(withId(R.id.EndButton)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 9, 24));
+        onView(withText("OK")).perform(click());
+        //Resourses Info
+        onView(withId(R.id.Resources)).perform(typeText("Member"));
+        //close keyboard
+        closeSoftKeyboard();
+        onView(withId(R.id.ResourceCost)).perform(typeText("30"));
+        //close keyboard
+        closeSoftKeyboard();
+        //cost
+        onView(withId(R.id.TaskCost)).perform(typeText("200"));
+        //close keyboard
+        closeSoftKeyboard();
+        //click confirm button
+        onView(withId(R.id.Create)).perform(click());
+            // check toast visibility
+            //for resources fields
+            onView(withText("Task Added Successfully"))
+                    .inRoot(new ToastMatcher())
+                    .check(matches(withText("Task Added Successfully")));
     }
 
     @Test
@@ -286,11 +361,11 @@ public class AddTaskTest {
         //select date for start and end
         //click the start button
         onView(withId(R.id.StartButton)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 3, 24));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 8, 11));
         onView(withText("OK")).perform(click());
         //click the end button
         onView(withId(R.id.EndButton)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 4, 24));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 8, 29));
         onView(withText("OK")).perform(click());
         //Resourses Info
         onView(withId(R.id.Resources)).perform(typeText("Member"));
@@ -323,11 +398,11 @@ public class AddTaskTest {
         closeSoftKeyboard();
         //click confirm button
         onView(withId(R.id.Create)).perform(click());
-        // check toast visibility
-        //for resources fields
-        onView(withText("The Task Added"))
-                .inRoot(new ToastMatcher())
-                .check(matches(withText("The Task Added")));
+            // check toast visibility
+            //for resources fields
+            onView(withText("Task Added Successfully"))
+                    .inRoot(new ToastMatcher())
+                    .check(matches(withText("Task Added Successfully")));
     }
 
     @After

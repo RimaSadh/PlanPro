@@ -128,7 +128,7 @@ public class AddProjectTest {
         //close the keyboard
         closeSoftKeyboard();
         //description
-        onView(withId(R.id.description)).perform(typeText("This Project Of Graduation Project For Second Term"));
+        onView(withId(R.id.description)).perform(typeText("\nThis Project Of Graduation Project For Second Term\n"));
         closeSoftKeyboard();
         // check when click the date and time button
         onView(withId(R.id.start)).perform(click());

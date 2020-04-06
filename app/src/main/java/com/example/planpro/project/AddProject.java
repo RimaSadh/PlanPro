@@ -180,6 +180,7 @@ public class AddProject extends AppCompatActivity {
         Pro.put("Description", pro.getDescription());
         Pro.put("StartDate", FDTS);
         Pro.put("EndDate", LDTS);
+        Pro.put("LateEnd", LDTS);
         Pro.put("ProjectID", proID);
         Pro.put("TotalCost", 0);
 
