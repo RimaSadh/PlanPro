@@ -77,10 +77,10 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.MyView
         Project project = projectsList.get(position);
         holder.project_name.setText(project.getName());
 
-       if(project.getStartDate() != null && project.getEndDate() != null) {
+       if(project.getStartDate() != null && project.getLateEnd() != null) {
 
            String start_date = project.getStartDate();
-           String end_date = project.getEndDate();
+           String end_date = project.getLateEnd();
 
            holder.start_date.setText(start_date);
            holder.end_date.setText(end_date);

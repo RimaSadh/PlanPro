@@ -110,6 +110,7 @@
         android:layout_marginTop="20dp"
         android:text="End:"
         android:textSize="20sp"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startDateHeader" />
 
@@ -122,14 +123,15 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:gravity="center"
         android:layout_marginRight="32dp"
         android:background="@drawable/custom_edit_text"
         android:clickable="false"
         android:ems="10"
+        android:gravity="center"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:text=""
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/endDateHeader"
         app:layout_constraintTop_toBottomOf="@+id/startDate" />
@@ -142,7 +144,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="20dp"
-        android:text="Late End:"
+        android:text="End:"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endDateHeader" />
