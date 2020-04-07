@@ -63,7 +63,7 @@
                         android:paddingTop="5dp"
                         android:paddingRight="2dp"
                         android:textColor="@color/red"
-                        android:text="End Date"
+                        android:text="Finish Date"
                         android:layout_weight="1"
                         android:textSize="15sp" />
 
