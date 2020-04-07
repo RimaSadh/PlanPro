@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.planpro.project.task.TaskAdapter;
 
 import android.annotation.SuppressLint;
@@ -13,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +27,7 @@ import com.example.planpro.project.task.Task;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -68,7 +71,10 @@ public class ViewProject extends AppCompatActivity {
         endDate = getIntent().getStringExtra("end_date");
         LateDate = getIntent().getStringExtra("late_end");
 
-        //for test can't send the extra for intent //Don't removed just update the value
+        getLateDate(projectID);
+
+
+        //for test puproses, can't send the extra for intent - Don't remove it just update the value
         if ( projectID == null ) {
             projectID ="KEMUHdFjORgcUxujCT64";
         }
@@ -95,11 +101,11 @@ public class ViewProject extends AppCompatActivity {
         Task_adapter = new TaskAdapter(this, tasks);
         tasksRecyclerView.setAdapter(Task_adapter);
 
-        totalC=0;
+        totalC = 0;
         first = true;
         //call method
         getTasks();
-        
+
         //set texts
         projectNameTV.setText(projectName);
         descriptionTV.setText(description);
@@ -117,7 +123,7 @@ public class ViewProject extends AppCompatActivity {
                 intent.putExtra("project_id", projectID);
                 intent.putExtra("start_Date", startDate);
                 intent.putExtra("end_Date", endDate);
-                intent.putExtra("late_end", LateDate);
+                intent.putExtra("late_end", lateEndDateTV.getText());
                 startActivity(intent);
             }
         });
@@ -162,7 +168,6 @@ public class ViewProject extends AppCompatActivity {
                                         }
 
 
-
                                         else {
                                             Toast.makeText(ViewProject.this, task.getException().getMessage(),
                                                     Toast.LENGTH_SHORT).show();
@@ -182,6 +187,27 @@ public class ViewProject extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void getLateDate(String id) {
+        db.collection("Projects").document(id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            DocumentSnapshot document = task.getResult();
+
+                            Timestamp late_date = (Timestamp) document.get("LateEnd");
+                            LateDate = new java.text.SimpleDateFormat("EEE, d MMM yyyy").format(late_date.toDate());
+
+                            lateEndDateTV.setText(LateDate);
+
+                        }
+                    }
+                });
 
     }
 
@@ -259,7 +285,6 @@ public class ViewProject extends AppCompatActivity {
 
     }
 
-
     public void calcTc(String Tid, final double task_cost){
 
         db.collection("Resource")
@@ -286,86 +311,13 @@ public class ViewProject extends AppCompatActivity {
                 });
     }
 
-
-//    public void calculateCost(){
-//
-//        db.collection("Tasks")
-//                .whereEqualTo("ProjectID", projectID).get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @SuppressLint("SetTextI18n")
-//                    @Override
-//                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-//
-//                        final double costs [] = new double[1000];
-//
-//                        int i = 0;
-//
-//                         double totalCostCost=0;
-//                        if(task.isSuccessful()){
-//
-//                            tasks.clear();
-//
-//                            if(!task.getResult().isEmpty()){
-//                                for (QueryDocumentSnapshot document : task.getResult()) {
-//
-//                                    taskID = document.getId();
-//                                    double task_cost = Double.parseDouble(document.get("TaskCost").toString());
-//                                    taskCost += task_cost;
-//                                    db.collection("Resource")
-//                                            .whereEqualTo("taskID",taskID)
-//                                            .get()
-//                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                                                @Override
-//                                                public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-//                                                    if (task.isSuccessful()) {
-//                                                        if(!task.getResult().isEmpty()){
-//                                                            for (QueryDocumentSnapshot document : task.getResult()) {
-//
-//                                                                double resource = Double.parseDouble(document.get("cost").toString());
-//                                                                resourceCost += resource;
-//
-//
-//                                                            }
-//                                                        }
-//
-//
-//
-//                                                    }
-//                                                }
-//                                            });
-//
-//                                    totalCost += resourceCost + taskCost;
-//                                    costs[i] = totalCost;
-//                                    i++;
-//
-//                                }// end for
-//
-//
-//                            }}
-//                        for(int j=0; j<costs.length; j++){
-//                            totalCostCost += costs[j];
-//                        }
-//                        totalCostTV.setText( totalCostCost+"");
-//
-//                        //i
-//
-//                    }// onComplete
-//                }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });//addOnCompleteListener
-//
-//
-//
-//    }
-
     @Override
     protected void onResume() {
         super.onResume();
         tasks.clear();
         first = true;
         getTasks();
+        getLateDate(projectID);
+
     }
 }
