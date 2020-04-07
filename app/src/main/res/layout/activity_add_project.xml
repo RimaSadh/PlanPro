@@ -149,7 +149,7 @@
         android:layout_below="@id/start"
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
-        android:text="End Date"
+        android:text="Finish Date"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
