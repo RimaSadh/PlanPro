@@ -71,9 +71,6 @@ public class ViewProject extends AppCompatActivity {
         endDate = getIntent().getStringExtra("end_date");
         LateDate = getIntent().getStringExtra("late_end");
 
-        getLateDate(projectID);
-
-
         //for test puproses, can't send the extra for intent - Don't remove it just update the value
         if ( projectID == null ) {
             projectID ="KEMUHdFjORgcUxujCT64";
@@ -94,6 +91,7 @@ public class ViewProject extends AppCompatActivity {
             LateDate ="Fri,1 Jan 2021";
         }
 
+        getLateDate(projectID);
 
         //view tasks, query tasks from database by projectID
         Tasks_LayoutManager = new LinearLayoutManager(this);
